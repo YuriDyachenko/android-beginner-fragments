@@ -23,6 +23,10 @@ public class Note {
         return title;
     }
 
+    public String getNumberedTitle(int index) {
+        return String.valueOf(index + 1) + ". " + getTitle();
+    }
+
     public void setTitle(String title) {
         this.title = title;
     }
