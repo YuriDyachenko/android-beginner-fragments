@@ -17,14 +17,11 @@ import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 public class NotesFragment extends Fragment {
 
     private static final String EXTRA_POSITION = "EXTRA_POSITION";
-    private final List<Note> notes = new ArrayList<>();
     private int position;
     private boolean isLandscape;
 
@@ -47,8 +44,8 @@ public class NotesFragment extends Fragment {
     private void initList(View view) {
         LinearLayout layout = (LinearLayout) view;
         Context context = getContext();
-        for (int i = 0; i < notes.size(); i++) {
-            Note note = notes.get(i);
+        for (int i = 0; i < Notes.NOTE_STORAGE.size(); i++) {
+            Note note = Notes.NOTE_STORAGE.get(i);
             TextView textView = new TextView(context);
             textView.setText(note.getNumberedTitle(i));
             textView.setTextSize(24);
@@ -58,7 +55,7 @@ public class NotesFragment extends Fragment {
             final int index = i;
             textView.setOnClickListener(v -> {
                 position = index;
-                showNoteDetails(note);
+                showNoteDetails();
             });
 
             layout.addView(textView);
@@ -81,33 +78,37 @@ public class NotesFragment extends Fragment {
             position = savedInstanceState.getInt(EXTRA_POSITION);
         }
 
-        if (isLandscape && notes.size() > position) {
-            showLandNoteDetails(notes.get(position));
+        if (isLandscape) {
+            showLandNoteDetails();
         }
     }
 
-    private void showLandNoteDetails(Note note) {
+    private void showLandNoteDetails() {
         requireActivity().getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.note_fragment_container, NoteFragment.newInstance(note))
+                .replace(R.id.note_fragment_container, NoteFragment.newInstance(position))
                 .commit();
     }
 
-    private void showPortNoteDetails(Note note) {
+    private void showPortNoteDetails() {
         Intent intent = new Intent(getContext(), NoteActivity.class);
-        intent.putExtra(NoteFragment.ARG_NOTE, note);
+        intent.putExtra(NoteFragment.ARG_NOTE_INDEX, position);
         startActivity(intent);
     }
 
-    private void showNoteDetails(Note note) {
+    private void showNoteDetails() {
         if (isLandscape) {
-            showLandNoteDetails(note);
+            showLandNoteDetails();
         } else {
-            showPortNoteDetails(note);
+            showPortNoteDetails();
         }
     }
 
     private void fillNotes() {
+        if (!Notes.NOTE_STORAGE.isEmpty()) {
+            return;
+        }
+
         XmlPullParser parser = getResources().getXml(R.xml.notes);
         Note note = null;
         boolean inEntry = false;
@@ -130,7 +131,7 @@ public class NotesFragment extends Fragment {
                     case XmlPullParser.END_TAG:
                         if (inEntry) {
                             if ("note".equalsIgnoreCase(tagName)) {
-                                notes.add(note);
+                                Notes.NOTE_STORAGE.add(note);
                                 inEntry = false;
                             } else if ("title".equalsIgnoreCase(tagName)) {
                                 note.setTitle(textValue);

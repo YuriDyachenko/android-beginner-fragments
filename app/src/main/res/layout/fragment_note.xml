@@ -21,13 +21,27 @@
         android:textColor="@color/teal_700"
         android:textSize="@dimen/title_text_size" />
 
-    <TextView
-        android:id="@+id/created_text_view"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="@dimen/fragment_header_padding"
-        android:text="@string/note_created"
-        android:textSize="@dimen/created_text_size" />
+        android:layout_height="50dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/created_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:padding="@dimen/fragment_header_padding"
+            android:text="@string/note_created"
+            android:textSize="@dimen/created_text_size" />
+
+        <Button
+            android:id="@+id/created_change_button"
+            android:layout_width="@dimen/change_button_width"
+            android:layout_height="match_parent"
+            android:backgroundTint="@color/fragment_header_background"
+            android:textColor="@color/purple_700"
+            android:text="@string/change_text" />
+    </LinearLayout>
 
     <ScrollView
         android:layout_width="match_parent"

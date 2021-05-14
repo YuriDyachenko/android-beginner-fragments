@@ -55,4 +55,8 @@ public class Note implements Serializable {
             e.printStackTrace();
         }
     }
+
+    public void setCreated(Date created) {
+        this.created = created;
+    }
 }
