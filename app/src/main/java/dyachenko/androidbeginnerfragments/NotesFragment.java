@@ -1,7 +1,6 @@
 package dyachenko.androidbeginnerfragments;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -91,9 +90,11 @@ public class NotesFragment extends Fragment {
     }
 
     private void showPortNoteDetails() {
-        Intent intent = new Intent(getContext(), NoteActivity.class);
-        intent.putExtra(NoteFragment.ARG_NOTE_INDEX, position);
-        startActivity(intent);
+        requireActivity().getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.notes_fragment_container, NoteFragment.newInstance(position))
+                .addToBackStack(null)
+                .commit();
     }
 
     private void showNoteDetails() {

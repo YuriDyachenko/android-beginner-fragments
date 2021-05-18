@@ -6,5 +6,5 @@
     <dimen name="created_text_size">18sp</dimen>
     <dimen name="body_text_size">20sp</dimen>
     <dimen name="separator_width">3dp</dimen>
-    <dimen name="change_button_width">50dp</dimen>
+    <dimen name="change_button_width">40dp</dimen>
 </resources>

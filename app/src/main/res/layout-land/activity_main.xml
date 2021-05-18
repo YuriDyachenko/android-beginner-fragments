@@ -7,12 +7,12 @@
     android:orientation="horizontal"
     tools:context=".MainActivity">
 
-    <fragment
-        android:id="@+id/notes"
-        android:name="dyachenko.androidbeginnerfragments.NotesFragment"
+    <LinearLayout
+        android:id="@+id/notes_fragment_container"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="1" />
+        android:layout_weight="1"
+        android:orientation="vertical" />
 
     <TextView
         android:layout_width="@dimen/separator_width"
