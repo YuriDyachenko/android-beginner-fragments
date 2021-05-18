@@ -1,9 +1,10 @@
 <resources>
-    <string name="app_name">Android Beginner Fragments</string>
+    <string name="app_name">My Notes 0.2</string>
     <string name="notes_list">Notes list:</string>
     <string name="note_details">Note details:</string>
     <string name="note_body">note body</string>
     <string name="note_created">note created: 14/05/2021</string>
     <string name="note_title">note title</string>
     <string name="change_text">…</string>
+    <string name="action_settings">Settings</string>
 </resources>

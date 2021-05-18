@@ -37,6 +37,10 @@ public class NotesFragment extends Fragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         fillNotes();
+
+//        Toolbar toolbar = view.findViewById(R.id.toolbar);
+//        ((AppCompatActivity) requireActivity()).setSupportActionBar(toolbar);
+
         initList(view);
     }
 
