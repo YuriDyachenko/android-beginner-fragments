@@ -4,12 +4,14 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -23,16 +25,6 @@ public class MainActivity extends AppCompatActivity {
         FragmentManager fragmentManager = getSupportFragmentManager();
 
         /*
-            Если в портретной ориентации мы открыли конкретную заметку, то она поместилась в стек.
-            Когда в этот момент мы переключаемся в альбомную ориентацию, где стек не нужен -
-            нижеследующий код позволяет его почистить, и в альбомной ориентации кнопка бэк
-            будет тогда закрывать приложение, как положено!
-         */
-        if (fragmentManager.getBackStackEntryCount() != 0) {
-            fragmentManager.popBackStackImmediate();
-        }
-
-        /*
             Создаем и размещаем в контейнере фрагмент списка только при начальном запуске.
          */
         if (savedInstanceState == null) {
@@ -40,6 +32,41 @@ public class MainActivity extends AppCompatActivity {
                     .replace(R.id.notes_fragment_container, new NotesFragment())
                     .commit();
         }
+
+        /*
+            Если в портретной ориентации мы открыли конкретную заметку, то она поместилась в стек.
+            Когда в этот момент мы переключаемся в альбомную ориентацию, где стек не нужен -
+            нижеследующий код позволяет его почистить, и в альбомной ориентации кнопка бэк
+            будет тогда закрывать приложение, как положено!
+            Но!!! С некоторых пор может быть переключение в тот момент, когда выведен
+            фрагмент о программе или настройки, их хотелось бы оставить!
+            Поэтому после очистки стека добавляем сверху их, если они были до очистки
+         */
+        if (fragmentManager.getBackStackEntryCount() != 0) {
+
+            boolean hasAbout = false;
+            boolean hasSettings = false;
+
+            List<Fragment> fragments = fragmentManager.getFragments();
+            for (Fragment fragment: fragments) {
+                if (fragment instanceof AboutFragment) {
+                    hasAbout = true;
+                }
+                if (fragment instanceof SettingsFragment) {
+                    hasSettings = true;
+                }
+            }
+
+            fragmentManager.popBackStackImmediate();
+
+            if (hasAbout) {
+                addAboutFragment(fragmentManager);
+            }
+            if (hasSettings) {
+                addSettingsFragment(fragmentManager);
+            }
+        }
+
     }
 
     private void initView() {
@@ -51,11 +78,28 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
     }
 
+    private void addSettingsFragment(FragmentManager fragmentManager) {
+        fragmentManager.beginTransaction()
+                .add(R.id.global_fragment_container, new SettingsFragment())
+                .addToBackStack(null)
+                .commit();
+    }
+
+    private void addAboutFragment(FragmentManager fragmentManager) {
+        fragmentManager.beginTransaction()
+                .add(R.id.global_fragment_container, new AboutFragment())
+                .addToBackStack(null)
+                .commit();
+    }
+
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId() == R.id.action_settings) {
-            Toast.makeText(this, R.string.action_settings, Toast.LENGTH_SHORT).show();
+        if (item.getItemId() == R.id.action_about) {
+            addAboutFragment(getSupportFragmentManager());
             return true;
+        }
+        if (item.getItemId() == R.id.action_settings) {
+            addSettingsFragment(getSupportFragmentManager());
         }
         return super.onOptionsItemSelected(item);
     }

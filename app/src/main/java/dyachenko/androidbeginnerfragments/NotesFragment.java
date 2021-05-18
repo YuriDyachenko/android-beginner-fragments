@@ -37,10 +37,6 @@ public class NotesFragment extends Fragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         fillNotes();
-
-//        Toolbar toolbar = view.findViewById(R.id.toolbar);
-//        ((AppCompatActivity) requireActivity()).setSupportActionBar(toolbar);
-
         initList(view);
     }
 
@@ -89,14 +85,14 @@ public class NotesFragment extends Fragment {
     private void showLandNoteDetails() {
         requireActivity().getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.note_fragment_container, NoteFragment.newInstance(position))
+                .replace(R.id.note_fragment_container, NoteFragment.newInstance(position, isLandscape))
                 .commit();
     }
 
     private void showPortNoteDetails() {
         requireActivity().getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.notes_fragment_container, NoteFragment.newInstance(position))
+                .replace(R.id.notes_fragment_container, NoteFragment.newInstance(position, isLandscape))
                 .addToBackStack(null)
                 .commit();
     }

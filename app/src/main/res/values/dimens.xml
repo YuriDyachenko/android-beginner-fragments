@@ -7,4 +7,6 @@
     <dimen name="body_text_size">20sp</dimen>
     <dimen name="separator_width">3dp</dimen>
     <dimen name="change_button_width">40dp</dimen>
+    <dimen name="about_main_text_size">24sp</dimen>
+    <dimen name="about_app_text_size">20sp</dimen>
 </resources>
