@@ -13,4 +13,10 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="action_search">Search</string>
     <string name="nothing_found">Nothing found</string>
+    <string name="edit_note_via_popup_menu">Edit note via popup menu</string>
+    <string name="apply">Apply</string>
+    <string name="edit_note_created">Edit note created</string>
+    <string name="edit_note_body">Edit note body</string>
+    <string name="edit_note_title">Edit note title</string>
+    <string name="in_developing">In developing...</string>
 </resources>

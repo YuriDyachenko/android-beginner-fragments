@@ -1,5 +1,7 @@
 package dyachenko.androidbeginnerfragments;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -21,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         initView();
+        readSettings();
 
         FragmentManager fragmentManager = getSupportFragmentManager();
 
@@ -64,6 +67,11 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
+    }
+
+    private void readSettings() {
+        SharedPreferences sharedPreferences = getSharedPreferences(Settings.PREFERENCE_NAME, Context.MODE_PRIVATE);
+        Settings.editNoteViaPopupMenu = sharedPreferences.getBoolean(Settings.EDIT_NOTE_VIA_POPUP_MENU, false);
     }
 
     private void initView() {

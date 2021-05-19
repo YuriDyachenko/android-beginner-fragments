@@ -1,13 +1,17 @@
 package dyachenko.androidbeginnerfragments;
 
+import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.PopupMenu;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
@@ -51,16 +55,39 @@ public class NoteFragment extends CommonFragment {
         О программе и настройки будут только в списке вызываться. */
         setHasOptionsMenu(!isLandscape);
 
+        View.OnClickListener popupListener = v -> {
+            if (Settings.editNoteViaPopupMenu) {
+                Activity activity = requireActivity();
+                PopupMenu popupMenu = new PopupMenu(activity, v);
+                activity.getMenuInflater().inflate(R.menu.menu_note_popup, popupMenu.getMenu());
+                popupMenu.setOnMenuItemClickListener(item -> {
+                    if (item.getItemId() == R.id.action_edit_created) {
+                        changeNoteCreated();
+                    } else {
+                        Toast.makeText(activity, R.string.in_developing, Toast.LENGTH_SHORT).show();
+                    }
+                    return true;
+                });
+                popupMenu.show();
+            }
+        };
+
         View view = inflater.inflate(R.layout.fragment_note, container, false);
 
         if (noteIndex < Notes.NOTE_STORAGE.size()) {
             Note note = Notes.NOTE_STORAGE.get(noteIndex);
 
-            ((TextView) view.findViewById(R.id.title_text_view)).setText(note.getTitle());
-            ((TextView) view.findViewById(R.id.body_text_view)).setText(note.getBody());
+            TextView titleTextView = view.findViewById(R.id.title_text_view);
+            titleTextView.setText(note.getTitle());
+            titleTextView.setOnClickListener(popupListener);
+
+            TextView bodyTextView = view.findViewById(R.id.body_text_view);
+            bodyTextView.setText(note.getBody());
+            bodyTextView.setOnClickListener(popupListener);
 
             createdTextView = view.findViewById(R.id.created_text_view);
             createdTextView.setText(note.getCreatedString());
+            createdTextView.setOnClickListener(popupListener);
 
             view.findViewById(R.id.created_change_button)
                     .setOnClickListener(v -> changeNoteCreated());
