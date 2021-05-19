@@ -10,11 +10,10 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
 
 import java.util.Calendar;
 
-public class NoteFragment extends Fragment {
+public class NoteFragment extends CommonFragment {
 
     public static final String ARG_NOTE_INDEX = "ARG_NOTE_INDEX";
     public static final String ARG_IS_LANDSCAPE = "ARG_IS_LANDSCAPE";
@@ -48,10 +47,8 @@ public class NoteFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        /*
-            Для портретной ориентации подключем меню, чтобы спрятать его пункты.
-            О программе и настройки будут только в списке вызываться.
-         */
+        /* Для портретной ориентации подключем меню, чтобы спрятать его пункты.
+        О программе и настройки будут только в списке вызываться. */
         setHasOptionsMenu(!isLandscape);
 
         View view = inflater.inflate(R.layout.fragment_note, container, false);
@@ -91,8 +88,7 @@ public class NoteFragment extends Fragment {
 
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-        menu.findItem(R.id.action_about).setVisible(false);
-        menu.findItem(R.id.action_settings).setVisible(false);
+        hideAllMenuItems(menu);
         super.onCreateOptionsMenu(menu, inflater);
     }
 }

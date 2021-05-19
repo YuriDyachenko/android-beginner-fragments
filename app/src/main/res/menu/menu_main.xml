@@ -5,6 +5,13 @@
     tools:context=".MainActivity">
 
     <item
+        android:id="@+id/action_search"
+        android:icon="@android:drawable/ic_menu_search"
+        android:title="@string/action_search"
+        app:actionViewClass="androidx.appcompat.widget.SearchView"
+        app:showAsAction="always" />
+
+    <item
         android:id="@+id/action_about"
         android:title="@string/action_about"
         app:showAsAction="never" />
