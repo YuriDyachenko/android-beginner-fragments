@@ -8,14 +8,22 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+
+import com.google.android.material.navigation.NavigationView;
 
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
+
+    private DrawerLayout drawer;
+    private ActionBarDrawerToggle toggle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
             boolean hasSettings = false;
 
             List<Fragment> fragments = fragmentManager.getFragments();
-            for (Fragment fragment: fragments) {
+            for (Fragment fragment : fragments) {
                 if (fragment instanceof AboutFragment) {
                     hasAbout = true;
                 }
@@ -75,12 +83,32 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initView() {
-        initToolbar();
+        Toolbar toolbar = initToolbar();
+        initDrawer(toolbar);
     }
 
-    private void initToolbar() {
+    private void initDrawer(Toolbar toolbar) {
+        drawer = findViewById(R.id.drawer_layout);
+        toggle = new ActionBarDrawerToggle(this, drawer, toolbar,
+                R.string.navigation_drawer_open,
+                R.string.navigation_drawer_close);
+        drawer.addDrawerListener(toggle);
+        toggle.syncState();
+
+        NavigationView navigationView = findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(item -> {
+            if (navigateFragment(item.getItemId())) {
+                drawer.closeDrawer(GravityCompat.START);
+                return true;
+            }
+            return false;
+        });
+    }
+
+    private Toolbar initToolbar() {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        return toolbar;
     }
 
     private void addSettingsFragment(FragmentManager fragmentManager) {
@@ -97,14 +125,21 @@ public class MainActivity extends AppCompatActivity {
                 .commit();
     }
 
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId() == R.id.action_about) {
+    private boolean navigateFragment(int id) {
+        if (id == R.id.action_about) {
             addAboutFragment(getSupportFragmentManager());
             return true;
         }
-        if (item.getItemId() == R.id.action_settings) {
+        if (id == R.id.action_settings) {
             addSettingsFragment(getSupportFragmentManager());
+        }
+        return false;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (navigateFragment(item.getItemId())) {
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -114,6 +149,24 @@ public class MainActivity extends AppCompatActivity {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_main, menu);
         return super.onCreateOptionsMenu(menu);
+    }
+
+    public void hideDrawer() {
+        if (drawer != null) {
+            drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+            if (toggle != null) {
+                toggle.setDrawerIndicatorEnabled(false);
+            }
+        }
+    }
+
+    public void showDrawer() {
+        if (drawer != null) {
+            drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+            if (toggle != null) {
+                toggle.setDrawerIndicatorEnabled(true);
+            }
+        }
     }
 
 }

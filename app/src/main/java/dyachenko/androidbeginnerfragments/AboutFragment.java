@@ -19,12 +19,22 @@ public class AboutFragment extends CommonFragment {
                              Bundle savedInstanceState) {
 
         setHasOptionsMenu(true);
-        return inflater.inflate(R.layout.fragment_about, container, false);
+        View view = inflater.inflate(R.layout.fragment_about, container, false);
+
+        ((MainActivity) requireActivity()).hideDrawer();
+
+        return view;
     }
 
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         hideAllMenuItems(menu);
         super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public void onDetach() {
+        ((MainActivity) requireActivity()).showDrawer();
+        super.onDetach();
     }
 }

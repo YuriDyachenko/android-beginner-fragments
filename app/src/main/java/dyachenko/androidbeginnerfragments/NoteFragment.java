@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.PopupMenu;
@@ -93,6 +92,10 @@ public class NoteFragment extends CommonFragment {
                     .setOnClickListener(v -> changeNoteCreated());
         }
 
+        if (!isLandscape) {
+            ((MainActivity) requireActivity()).hideDrawer();
+        }
+
         return view;
     }
 
@@ -117,5 +120,13 @@ public class NoteFragment extends CommonFragment {
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         hideAllMenuItems(menu);
         super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public void onDetach() {
+        if (!isLandscape) {
+            ((MainActivity) requireActivity()).showDrawer();
+        }
+        super.onDetach();
     }
 }

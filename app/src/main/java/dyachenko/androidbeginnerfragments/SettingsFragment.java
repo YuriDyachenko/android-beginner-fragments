@@ -33,6 +33,8 @@ public class SettingsFragment extends CommonFragment {
             requireActivity().getSupportFragmentManager().popBackStack();
         });
 
+        ((MainActivity) requireActivity()).hideDrawer();
+
         return view;
     }
 
@@ -47,5 +49,11 @@ public class SettingsFragment extends CommonFragment {
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         hideAllMenuItems(menu);
         super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public void onDetach() {
+        ((MainActivity) requireActivity()).showDrawer();
+        super.onDetach();
     }
 }
