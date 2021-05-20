@@ -9,6 +9,14 @@
     <dimen name="change_button_width">40dp</dimen>
     <dimen name="about_main_text_size">24sp</dimen>
     <dimen name="about_app_text_size">20sp</dimen>
-    <dimen name="nav_header_height">150dp</dimen>
-    <dimen name="nav_header_dimen">42sp</dimen>
+    <dimen name="nav_header_height">220dp</dimen>
+    <dimen name="nav_header_dimen">38sp</dimen>
+    <dimen name="drawer_image_width">220dp</dimen>
+    <dimen name="drawer_image_height">170dp</dimen>
+    <dimen name="drawer_image_alpha">0.8</dimen>
+    <dimen name="drawer_padding_common">10dp</dimen>
+    <dimen name="drawer_image_padding_top">40dp</dimen>
+    <dimen name="settings_alpha">0.9</dimen>
+    <dimen name="settings_padding">20dp</dimen>
+    <dimen name="settings_text_size">20sp</dimen>
 </resources>

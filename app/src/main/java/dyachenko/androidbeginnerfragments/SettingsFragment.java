@@ -24,7 +24,7 @@ public class SettingsFragment extends CommonFragment {
 
         View view = inflater.inflate(R.layout.fragment_settings, container, false);
 
-        CheckBox checkBox = (CheckBox) view.findViewById(R.id.edit_note_via_popup_checkbox);
+        CheckBox checkBox = view.findViewById(R.id.edit_note_via_popup_checkbox);
         checkBox.setChecked(Settings.editNoteViaPopupMenu);
 
         view.findViewById(R.id.settings_apply_button).setOnClickListener(v -> {

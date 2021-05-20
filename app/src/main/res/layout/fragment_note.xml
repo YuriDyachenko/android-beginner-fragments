@@ -23,7 +23,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
         android:orientation="horizontal">
 
         <TextView
@@ -39,8 +39,8 @@
             android:layout_width="@dimen/change_button_width"
             android:layout_height="match_parent"
             android:backgroundTint="@color/fragment_header_background"
-            android:textColor="@color/purple_700"
-            android:text="@string/change_text" />
+            android:text="@string/change_text"
+            android:textColor="@color/purple_700" />
     </LinearLayout>
 
     <ScrollView
