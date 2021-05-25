@@ -32,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
 
         initView();
         readSettings();
+        fillNotes();
 
         FragmentManager fragmentManager = getSupportFragmentManager();
 
@@ -75,6 +76,10 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
+    }
+
+    private void fillNotes() {
+        Notes.fillFromXml(getResources().getXml(R.xml.notes));
     }
 
     private void readSettings() {
